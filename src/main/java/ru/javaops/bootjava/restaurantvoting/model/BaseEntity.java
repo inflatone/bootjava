@@ -1,6 +1,7 @@
 package ru.javaops.bootjava.restaurantvoting.model;
 
 import lombok.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.domain.Persistable;
 import org.springframework.data.util.ProxyUtils;
 import org.springframework.util.Assert;
@@ -19,12 +20,14 @@ public abstract class BaseEntity implements Persistable<Integer> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Integer id;
 
+    // doesn't work for hibernate lazy proxy
     public int id() {
         Assert.notNull(id, "Entity must has id");
         return id;
     }
 
     @Override
+    @JsonIgnore
     public boolean isNew() {
         return id == null;
     }
